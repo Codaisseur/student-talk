@@ -1,14 +1,20 @@
 // src/screens/ConversationsList.js
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import useSlackApi from "../lib/useSlackApi";
+import { CompactMode } from "../lib/CompactMode";
 
 export default function ConversationsList() {
   const conversations = useSlackApi("conversations.list?exclude_archived=true");
+  const { toggleCompactMode } = useContext(CompactMode);
 
   return (
     <Container>
+      <p>
+        <button onClick={toggleCompactMode}>Toggle compact mode</button>
+      </p>
+
       {conversations.status === "loading" && <p>Loading...</p>}
 
       {conversations.status === "error" && <p>Error :(</p>}
